@@ -8,8 +8,14 @@ import os
 import numpy as np
 from sklearn.metrics import roc_curve, auc, precision_recall_fscore_support, confusion_matrix
 import matplotlib.pyplot as plt
-import torch
-import torch
+
+import numpy as np
+from sklearn.metrics import roc_curve, auc, accuracy_score, precision_score, recall_score, f1_score
+import matplotlib.pyplot as plt
+
+import torchvision.models as models
+import torchvision.transforms as transforms
+from sklearn.metrics import roc_curve, auc, confusion_matrix, precision_recall_fscore_support
 
 # Check if CUDA is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
