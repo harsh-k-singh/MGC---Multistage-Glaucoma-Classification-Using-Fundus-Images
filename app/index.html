@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Glaucoma Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Glaucoma Detection</h1>
+    <form id="detection-form" enctype="multipart/form-data">
+        <label for="image-input">Select an image:</label>
+        <input type="file" id="image-input" accept="image/*" required>
+        <button type="submit">Detect</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('detection-form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const file = document.getElementById('image-input').files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const prediction = await response.text();
+                    resultDiv.textContent = `Prediction: ${prediction}`;
+                } else {
+                    resultDiv.textContent = 'Error: Unable to make a prediction.';
+                }
+            } catch (error) {
+                resultDiv.textContent = 'Error: Unable to make a prediction.';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
